@@ -35,7 +35,7 @@ public class Main extends Thread {
 	public static float xRot = 0;
 	public static float yRot = 0;
 	
-	public static void main(String[] args) {
+	public static void runGame() {
 		new Main().startGame();
 	}
 	
@@ -108,7 +108,7 @@ public class Main extends Thread {
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 		
 		window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
-		if (true) {
+		if (window == NULL) {
 			JOptionPane.showMessageDialog(null, "Your graphics driver is incompatible with openGL 3.3");
 		    glfwTerminate();
 		    //throw new RuntimeException("Failed to create the GLFW window");
