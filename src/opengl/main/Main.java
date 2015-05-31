@@ -34,6 +34,7 @@ public class Main extends Thread {
 	public static float zPos = -2;
 	public static float xRot = 0;
 	public static float yRot = 0;
+	public static float time = 0;
 	
 	public static void runGame() {
 		new Main().startGame();
@@ -65,7 +66,7 @@ public class Main extends Thread {
 	}
 	
 	public void update() {
-		
+		System.out.println(time);
 	}
 	
 	public void render() {
@@ -75,9 +76,13 @@ public class Main extends Thread {
 	    glUniformMatrix4fv(uniView, false, viewMatrix.getBuffer());
 	    
 	    Renderer.begin();
-	    Renderer.addVertex(-10.0f, -10.0f, 0.0f);
-	    Renderer.addVertex(10.0f, (float)glfwGetTime() * - 2, 0.0f);
-	    Renderer.addVertex(-10.0f,  -10.0f, 20.0f);
+	    Renderer.addVertexWithUV(-100.0f, 0.0f, 100.0f, 0f, 10f);
+	    Renderer.addVertexWithUV(100.0f, 0, 100.0f, 10f, 10f);
+	    Renderer.addVertexWithUV(-100.0f, 0.0f, -100.0f, 0f, 0f);
+	    
+	    Renderer.addVertexWithUV(-100.0f, 0.0f, -100.0f, 0f, 0f);
+	    Renderer.addVertexWithUV(100.0f, 0f, 100.0f, 10f, 10f);
+	    Renderer.addVertexWithUV(100.0f, 0f, -100.0f, 10f, 0f);
 	    Renderer.end();
 		
 		glfwSwapBuffers(window);
@@ -134,7 +139,7 @@ public class Main extends Thread {
 		int handle = glGenTextures();
 		glBindTexture(GL_TEXTURE_2D, handle);
 		
-		InputStream in = new FileInputStream("resources/textures/cobblestone.png");
+		InputStream in = new FileInputStream("resources/textures/grass.png");
 		BufferedImage image = ImageIO.read(in);
 		
 		AffineTransform transform = AffineTransform.getScaleInstance(1f, -1f);

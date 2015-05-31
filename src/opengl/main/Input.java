@@ -55,10 +55,10 @@ public class Input {
 			Main.yPos += 0.1;
 		}
 		if (glfwGetKey( Main.window, GLFW_KEY_LEFT ) == GLFW_PRESS) {
-			Main.xRot += 0.5;
+			Main.time += 0.5;
 		}
 		if (glfwGetKey( Main.window, GLFW_KEY_RIGHT ) == GLFW_PRESS) {
-			Main.xRot -= 0.5;
+			Main.time -= 0.5;
 		}
 		if (glfwGetMouseButton(Main.window, 0) == GLFW_PRESS) {
 			float mouseSpeed = 0.04f;

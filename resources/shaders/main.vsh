@@ -14,6 +14,7 @@ out vec3 EyeDirection_cameraspace;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
+uniform float time;
 
 void main() {
     vertexColor = color;
@@ -30,7 +31,7 @@ void main() {
 	EyeDirection_cameraspace = vec3(0,0,0) - vertexPosition_cameraspace;
  
 	// Vector that goes from the vertex to the light, in camera space. M is ommited because it's identity.
-	vec3 LightPosition_worldspace = vec3(-5, 10, -8);
+	vec3 LightPosition_worldspace = vec3(1000, 1000, 0);
 	vec3 LightPosition_cameraspace = ( view * vec4(LightPosition_worldspace,1)).xyz;
 	LightDirection_cameraspace = LightPosition_cameraspace + EyeDirection_cameraspace;
  

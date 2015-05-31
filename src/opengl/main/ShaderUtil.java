@@ -55,8 +55,11 @@ public class ShaderUtil
 				glUniformMatrix4fv(Main.uniView, false, view.getBuffer());
 
 				Main.uniProjection = glGetUniformLocation(shaderProgram, "projection");
-				Matrix4f projection = Matrix4f.perspective(45, 4f / 3f, 0.1f, 100f);
+				Matrix4f projection = Matrix4f.perspective(45, 4f / 3f, 0.1f, 1000f);
 				glUniformMatrix4fv(Main.uniProjection, false, projection.getBuffer());
+				
+				int time = glGetUniformLocation(shaderProgram, "time");
+				glUniform1f(Main.uniProjection, Main.time);
 				
 				return shaderProgram;
 	}
