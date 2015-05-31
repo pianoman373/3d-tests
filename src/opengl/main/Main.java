@@ -76,14 +76,16 @@ public class Main extends Thread {
 	    glUniformMatrix4fv(uniView, false, viewMatrix.getBuffer());
 	    
 	    Renderer.begin();
-	    Renderer.addVertexWithUV(-100.0f, 0.0f, 100.0f, 0f, 10f);
-	    Renderer.addVertexWithUV(100.0f, 0, 100.0f, 10f, 10f);
-	    Renderer.addVertexWithUV(-100.0f, 0.0f, -100.0f, 0f, 0f);
+	    Renderer.addVertexWithUV(-100.0f, -1.0f, 100.0f, 0f, 10f);
+	    Renderer.addVertexWithUV(100.0f, -1, 100.0f, 10f, 10f);
+	    Renderer.addVertexWithUV(-100.0f, -1.0f, -100.0f, 0f, 0f);
 	    
-	    Renderer.addVertexWithUV(-100.0f, 0.0f, -100.0f, 0f, 0f);
-	    Renderer.addVertexWithUV(100.0f, 0f, 100.0f, 10f, 10f);
-	    Renderer.addVertexWithUV(100.0f, 0f, -100.0f, 10f, 0f);
+	    Renderer.addVertexWithUV(-100.0f, -1.0f, -100.0f, 0f, 0f);
+	    Renderer.addVertexWithUV(100.0f, -1f, 100.0f, 10f, 10f);
+	    Renderer.addVertexWithUV(100.0f, -1f, -100.0f, 10f, 0f);
 	    Renderer.end();
+	    
+	    //Renderer.renderObj("resources/models/cube.obj");
 		
 		glfwSwapBuffers(window);
 		glfwPollEvents();

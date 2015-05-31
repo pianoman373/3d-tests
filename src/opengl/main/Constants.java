@@ -92,7 +92,7 @@ public class Constants {
 	};
 	
 	public static float[] normals = new float[] {
-		/*-1.0f, -0.0f, 0.0f,
+		-1.0f, -0.0f, 0.0f,
 		-1.0f, 0.0f, 0.0f,
 		-1.0f, 0.0f, 0.0f,
 		-0.0f, 0.0f, -1.0f,
@@ -127,11 +127,11 @@ public class Constants {
 		0.0f, 1.0f, 0.0f,
 		0.0f, 0.0f, 1.0f,
 		0.0f, 0.0f, 1.0f,
-		0.0f, 0.0f, 1.0f*/
+		0.0f, 0.0f, 1.0f
+		/*0.0f, 1.0f, 0.0f,
 		0.0f, 1.0f, 0.0f,
 		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f,
-		0.0f, 1.0f, 0.0f
+		0.0f, 1.0f, 0.0f*/
 	};
 	
 	public static short[] indices = new short[] {

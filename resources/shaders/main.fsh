@@ -21,7 +21,7 @@ void main() {
     vec3 imageColor = texture( texImage, UV ).rgb;
     vec3 lightColor = vec3(1, 1, 1);
     vec3 ambientColor = vec3(0.2, 0.2, 0.2);
-    float lightPower = 1.5;
+    float lightPower = 1.2;
     
     // Eye vector (towards the camera)
 	vec3 E = normalize(EyeDirection_cameraspace);
@@ -36,5 +36,5 @@ void main() {
 	vec3 MaterialDiffuseColor = (ambientColor + lightColor * cosTheta) * imageColor * lightPower;
     vec3 MaterialSpecularColor = lightColor * lightPower * pow(cosAlpha,10);
     
-    fragColor = vec4(MaterialDiffuseColor + (MaterialSpecularColor * 0.2), 1);
+    fragColor = vec4(MaterialDiffuseColor + (MaterialSpecularColor * 0.1), 1);
 }

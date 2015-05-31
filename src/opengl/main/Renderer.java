@@ -145,6 +145,7 @@ public class Renderer {
 	
 	public static void renderObj(String file) {
 		Path path = Paths.get(file);
+		normals.put(Constants.normals);
 		
 		if (Files.exists(path)) 
 		{
@@ -169,9 +170,9 @@ public class Renderer {
 						float x = Float.valueOf(values[1]);
 						float y = Float.valueOf(values[2]);
 						float z = Float.valueOf(values[3]);
-						normals.put(x);
-						normals.put(y);
-						normals.put(z);
+						//normals.put(x);
+						//normals.put(y);
+						//normals.put(z);
 					}
 					else if (line.startsWith("f ")) {
 						String[] triangles = line.split(" ");
