@@ -9,13 +9,7 @@ import static org.lwjgl.opengl.GL20.glUniform1f;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.*;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.nio.FloatBuffer;
-import java.nio.ShortBuffer;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.lwjgl.BufferUtils;
 
@@ -23,7 +17,6 @@ public class Renderer {
 	private static FloatBuffer vertices;
 	private static FloatBuffer normals;
 	private static FloatBuffer uvs;
-	private static ShortBuffer indices;
 	private static int numVertices;
 	private static boolean drawing;
 	private static int vbo;
@@ -41,7 +34,7 @@ public class Renderer {
 		vbo = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, vbo);
 		
-		vertices = BufferUtils.createFloatBuffer(4096);
+		vertices = BufferUtils.createFloatBuffer(1000000);
 		
 		long size = vertices.capacity() * Float.BYTES;
 		glBufferData(GL_ARRAY_BUFFER, size, GL_STREAM_DRAW);
@@ -55,7 +48,7 @@ public class Renderer {
 		glBufferData(GL_ARRAY_BUFFER, colors, GL_STATIC_DRAW);
 		
 		//texure coords
-		uvs = BufferUtils.createFloatBuffer(4096);
+		uvs = BufferUtils.createFloatBuffer(1000000);
 		texBuffer = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, texBuffer);
 		glBufferData(GL_ARRAY_BUFFER, uvs, GL_STATIC_DRAW);
@@ -63,14 +56,9 @@ public class Renderer {
 		//normals
 		normalBuffer = glGenBuffers();
 		glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
-		normals = BufferUtils.createFloatBuffer(4096);
+		normals = BufferUtils.createFloatBuffer(1000000);
 		long normalSize = normals.capacity() * Float.BYTES;
 		glBufferData(GL_ARRAY_BUFFER, normalSize, GL_STREAM_DRAW);
-		
-		indices = BufferUtils.createShortBuffer(4096);
-		indexBuffer = glGenBuffers();
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices, GL_STATIC_DRAW);
 		
 		glEnable(GL_CULL_FACE);
 		
@@ -94,10 +82,14 @@ public class Renderer {
 	}
 	
 	public static void addVertexWithUV(float x, float y, float z, float u, float v) {
+		addVertexWithUVNormal(x, y, z, u, v, 0, 1, 0);
+	}
+	
+	public static void addVertexWithUVNormal(float x, float y, float z, float u, float v, float normX, float normY, float normZ) {
 		vertices.put(x).put(y).put(z);
 		uvs.put(u).put(v);
-		normals.put(0).put(1).put(0);
-		indices.put((short)numVertices);
+		normals.put(normX).put(normY).put(normZ);
+		//indices.put((short)numVertices);
 		numVertices++;
 	}
 	
@@ -112,7 +104,6 @@ public class Renderer {
 	public static void flush() {
 		if (numVertices > 0) {
 			vertices.flip();
-			indices.flip();
 			normals.flip();
 			uvs.flip();
 			glBindVertexArray(vao);
@@ -130,81 +121,13 @@ public class Renderer {
 			glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
 			glBufferSubData(GL_ARRAY_BUFFER, 0, normals);
 			
-			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-			glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices);
 			
-			glDrawElements(GL_TRIANGLES, numVertices, GL_UNSIGNED_SHORT, 0);
+			glDrawArrays(GL_TRIANGLES, 0, numVertices);
 		
 			numVertices = 0;
 			vertices.clear();
-			indices.clear();
 			uvs.clear();
 			normals.clear();
-		}
-	}
-	
-	public static void renderObj(String file) {
-		Path path = Paths.get(file);
-		normals.put(Constants.normals);
-		
-		if (Files.exists(path)) 
-		{
-			try {
-				BufferedReader in = Files.newBufferedReader(path);
-				String line = null;
-				
-				while ((line = in.readLine()) != null) 
-				{
-					if (line.startsWith("v ")) {
-						String[] values = line.split(" ");
-						float x = Float.valueOf(values[1]);
-						float y = Float.valueOf(values[2]);
-						float z = Float.valueOf(values[3]);
-						vertices.put(x);
-						vertices.put(y);
-						vertices.put(z);
-						numVertices += 3;
-					}
-					if (line.startsWith("vn ")) {
-						String[] values = line.split(" ");
-						float x = Float.valueOf(values[1]);
-						float y = Float.valueOf(values[2]);
-						float z = Float.valueOf(values[3]);
-						//normals.put(x);
-						//normals.put(y);
-						//normals.put(z);
-					}
-					else if (line.startsWith("f ")) {
-						String[] triangles = line.split(" ");
-						for (int i = 1; i < 4; i++) {
-							String[] index = triangles[i].split("/");
-							indices.put((short)(Short.valueOf(index[0])-1));
-							//indices.put((short)(Short.valueOf(index[1])-1));
-							//indices.put((short)(Short.valueOf(index[0])-1));
-						}
-					}
-				}
-				vertices.flip();
-				indices.flip();
-				normals.flip();
-				
-				glBindBuffer(GL_ARRAY_BUFFER, vbo);
-				glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
-				
-				//glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
-				//glBufferSubData(GL_ARRAY_BUFFER, 0, normals);
-				
-				glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-				glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices);
-				
-				glDrawElements(GL_TRIANGLES, 10000, GL_UNSIGNED_SHORT, 0);
-				
-				vertices.clear();
-				indices.clear();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 	}
 	
