@@ -36,5 +36,5 @@ void main() {
 	vec3 MaterialDiffuseColor = (ambientColor + lightColor * cosTheta) * imageColor * lightPower;
     vec3 MaterialSpecularColor = lightColor * lightPower * pow(cosAlpha,10);
     
-    fragColor = vec4(MaterialDiffuseColor + (MaterialSpecularColor * 0.2), 1);
+    fragColor = vec4(MaterialDiffuseColor + (MaterialSpecularColor * 0.1), 1);
 }

@@ -66,13 +66,6 @@ public class Main extends Thread {
 	    
 	    World.render();
 	    
-	    Renderer.begin();
-	    Textures.loadTexture("resources/textures/cobblestone.png");
-	    ModelLoader.renderObj("resources/models/sphere.obj");
-	    Renderer.end();
-	    
-	    //Renderer.renderObj("resources/models/cube.obj");
-		
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
